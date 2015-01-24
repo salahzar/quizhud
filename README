@@ -1,0 +1,117 @@
+quizHUD Readme
+==============
+
+Thank you for using the quizHUD!
+
+This tool is designed to facilitate the delivery of education material, and assessment of student ability, within the Second Life virtual world. It consists of 3 parts: a 'HUD' device (heads-up display) which your students will use in Second Lifeto interact with the system; a 'manager' device which sits somewhere on your virtual land to coordinate the delivery of material; and the website software, which you install on your own webserver.
+
+
+You can get documentation, as wel as information about downloading the files and getting the SL objects, from our website:
+
+ http://quizhud.avid-insight.co.uk
+
+
+
+REQUIREMENTS
+============
+- Your own land in Second Life (it can also work with group land, so long as you can deed objects to the group)
+- An external webserver running MySQL 4 (or higher) and PHP 4 (or higher)
+
+
+WEBSITE INSTALLATION
+====================
+First of all, you will need a database to store your quizHUD data in. You can create a new one, or use an existing one (provided that the table names do not conflict: all quizHUD tables start with prefix "qh_"). Refer to your webserver documentation for information about viewing/creating databases.
+
+* Remember to take a note of your database name, database username/password, and the server address *
+
+When you have downloaded the quizHUD files, you must create a configuration file. To do this, copy the file called "config_example.php" and rename it to "config.php". Edit the file, and customize the values to fit your website:
+
+- QUIZHUD_WWW_ROOT = the URL to access your quizHUD installation. Should start with "http" but should not have a trailing slash (/)
+- QUIZHUD_DIR_ROOT = the absolute path on your webserver where you will install the quizHUD. You can sometimes find this information when you connect via FTP.
+- QUIZHUD_ADMIN_PWD = the password you will use to login to your quizHUD website
+- QUIZHUD_INTERNAL_PWD = the password your quizHUD objects will use to securely connect to your quizHUD website
+
+- $dbhost = the server address of your database (often 'localhost', but may be different for you)
+- $dbuser = the username for logging-in to your database
+- $dbpass = the password for logging-in to your database
+- $dbname = the name of the database to connect to
+
+
+Save the file, and then upload all the quizHUD files to the desired location on your webserver. You will normally do this using FTP software, such as WiseFTP or Filezilla. Refer to your webserver documentation for more information if you are unsure.
+
+Finally, visit your quizHUD website in your browser, and login using the admin password you set in the "config.php" file. Make sure to visit the "Home" page, and it should report that the quizHUD is not yet installed. Click the link to install it, and you will be taken to the installation page. It will setup all the tables it needs in your database, and add some basic initial data.
+
+Your installation is now complete, so you can start editing pages and quizzes.
+
+
+
+SECOND LIFE CONFIGURATION
+=========================
+You will now need to configure your quizHUD objects in Second Life to 'talk to' your quizHUD website.
+
+Manager Object
+--------------
+Start by rezzing a "quizHUD Manager" somewhere on the ground in your sim or parcel of land. A single manager object can serve an entire sim. However, if multiple independent educators are sharing a sim, then you may each need your own manage object; make sure to use an obscure internal password to prevent conflicts!
+
+Right-click the manager object to edit it, select the "Contents" tab, and double-click the script inside called "quiz_hud_manager.lsl". All you need to do here is find the following line:
+
+string QUIZHUD_INTERNAL_PWD = "...";
+
+Change the "..." text to match the internal password you specified in the "config.php" script earlier on (making sure to use the "" round it). Save and close the script.
+
+NOTE: if you are using group-owned land, then you will also need to deed the object to the group. To do this, click the "General" tab, and select the appropriate group. Make sure the "Share with group" box is checked, and then click the "Deed" button. If you are unable to perform these steps, then you may not have permission to deed objects to the group. Speak to your group owner.
+
+
+Parcel Media Settings
+---------------------
+The parcel which the manager object is on will define the parcel media settings which affect your quizHUD device. For this reason, you should setup your parcel media to use the media texture provided when you got the objects (you can use your own texture too, but remember to modify your quizHUD objects to match).
+
+It is also advisable (but not essential) to setup the URL of the quizHUD pages in your media settings, so that the "home" page will be immediately visible. To do this, take your quizHUD URL, and add "/hud/pages.php" to the end.
+
+IMPORTANT: you MUST have the parcel media setup to use a web-page of some kind, even if the address is different.
+
+ALSO IMPORTANTL: Finally, you should also setup your media size to 500 pixels wide by 250 pixels high. This will make sure the quizHUD pages render correctly, in full. 
+
+
+quizHUD
+-------
+You will need to do a little more configuration for the HUD object. First of all, you might like to rename it to identify which site it belongs to. To do this, find it in your inventory, right-click it, and select "Properties". Edit the "name" field (e.g. add your class name or website URL to the end), and close the properties window.
+
+Next, right-click the quizHUD in your inventory again, and click "Wear". It should become visible at the top-left of your screen. Right click it on your screen, select "Edit", and click the "Contents" tab. Double-click the "quiz_hud.lsl" script to open it.
+
+There are two important lines here:
+
+string QUIZHUD_WWW_ROOT = "...";
+string QUIZHUD_INTERNAL_PWD = "...";
+
+The first line specifies the URL to your quizHUD installation, and the second specifies the internal password (the same as in the manager object). Both of these values should correspond to the same values in the "config.php" file you setup earlier.
+
+
+There is another line which you might want to use:
+
+integer quizid = 0;
+
+Normally, you will want to leave this number set to 0, which means the HUD will always use the 'Current' quiz from your quizHUD site. If you want the HUD to always use one specific quiz, then you can enter its ID number here. The "Quiz" page on your quizHUD website shows the ID numbers on the left, while the 'Current' quiz will be highlighted (if there is one). To select a specific quiz as the current one, click the lightbulb icon beside it on the right.
+
+
+'Explore' Objects
+-----------------
+This is an optional feature which allows students to click on objects in their virtual environment to access information, or to answer quiz questions.
+
+To enable this feature, find the "quiz_hud_explore.lsl" script among your quizHUD objects. Next, locate an object in the environment which you want to be clickable, then right-click it, select "Edit", and click the "Contents" tab (you require editing permission). Drag the "quiz_hud_explore.lsl" script into it, and when it appears in the object's contents, double-click it. Locate the following line near the top:
+
+string EXPLORE_NAME = "...";
+
+Change the "..." text to a simple name for this object (use only letters, numbers, underscores, and dashes). For example, you might call it "explore-door", or "explore-table" (the "explore-" prefix is optional). Save and close the script, and close the editing window.
+
+Visit your quizHUD site in your browser, and click the "Pages" link. Click "Add New Page", and fill in the form to create a page to identify the object you have just made clickable. NOTE: the name of the page must exactly match the name you specified in the script earlier!
+
+Repeat this process for each object which you want to be clickable. (Multiple objects can have the same name.)
+
+You can now test this by wearing your quizHUD, and clicking on one of these objects. It should display one of the pages you have just created.
+
+You can also use these objects in quizzes. Edit or create a new quiz, and select "New Explore Question". Enter the question text (e.g. "Find a table"), and click "Save". Now click "Add Answer", and in the "Shortname" box, enter the name of the object which you specified in its script earlier (e.g. "explore-table"). You can optionally enter a more human-readable name in the "Text" box (e.g. "A Table"). Enter a value (typically 1.0 for a correct answer) for this answer, and click "Save".
+
+Note: you usually only need to enter the correct answer(s) for "Explore" questions like this. If the user clicks an unrecognised object, then it is assumed to be an incorrect answer.
+
+

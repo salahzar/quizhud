@@ -1,0 +1,69 @@
+/*
+// This file is part of an interactive HTML-on-a-prim demo.
+// Originally developed by Peter Bloomfield (SL: Pedro McMillan).
+// Stylesheet for QuizHUD pages.
+// Author: Peter R. Bloomfield
+
+// GPL:
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+body {
+ background-color:white;
+ font-size:10pt;
+ color:#000000;
+ font-family:sans-serif;
+ width:490px;
+ height:240px;
+}
+
+.error {
+    background-color:#ffaaaa;
+    border:solid 2px #dd0000;
+    text-align:center;
+}
+
+div.content {
+ width:480px;
+ height:220px;
+ border:solid 1px black;
+ margin:0px 0px 0px 0px;
+ padding:8px;
+
+
+ text-align:left;
+}
+
+div.content div {
+ font-size:16pt;
+ color:#000088;
+ font-family:sans-serif;
+}
+
+table {
+ border-style:none;
+ border-collapse:collapse;
+}
+
+th {
+ font-weight:bold;
+ border:solid 1px gray;
+ padding:2px;
+}
+
+td {
+ border:solid 1px gray;
+ padding:2px;
+}
