@@ -30,15 +30,11 @@ require_once('../html2text.inc.php');
 
 // Attempt to get the page
 if (!$page = get_page($id)) error("Failed to find page \"$id\".");
-// SAL converting from HTML to standard TEXT for opensim
 ob_start();
 $page->render();
 $text = ob_get_contents();
 ob_end_clean();
-$p = new Html2Text(nl2br($text));
+$p = new Html2Text($text);
 $text=$p->getText();
-//$text=htmlspecialchars_decode($text,ENT_COMPAT|ENT_HTML401);
-
-
-echo strip_tags($text);
+echo $text;
 ?>

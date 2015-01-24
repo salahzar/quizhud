@@ -66,6 +66,9 @@ $id = fetch_param_integer('id', 0);
 $name = fetch_param_string('name', '');
 $title = fetch_param_string('title', '');
 $text = fetch_param_string('text', '', true);
+
+// SAL: to proper deal with quotes
+$text=htmlentities($text,ENT_COMPAT | ENT_HTML401 | ENT_QUOTES);
 $image = fetch_param_string('image', '');
 $layout = fetch_param_string('layout', 'imageright');
 

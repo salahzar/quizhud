@@ -24,21 +24,12 @@
 // Fetch the parameter
 $id = 'home';
 if (isset($_REQUEST['id'])) $id = $_REQUEST['id'];
-require_once('../config.php');
-require_once('../lib.php');
-require_once('../html2text.inc.php');
+
+require_once('_page_header.php');
 
 // Attempt to get the page
 if (!$page = get_page($id)) error("Failed to find page \"$id\".");
-// SAL converting from HTML to standard TEXT for opensim
-ob_start();
 $page->render();
-$text = ob_get_contents();
-ob_end_clean();
-$p = new Html2Text(nl2br($text));
-$text=$p->getText();
-//$text=htmlspecialchars_decode($text,ENT_COMPAT|ENT_HTML401);
 
-
-echo strip_tags($text);
+require_once('_page_footer.php');
 ?>

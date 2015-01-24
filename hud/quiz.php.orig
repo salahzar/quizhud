@@ -34,12 +34,7 @@
 //
 //////////
 
-require_once('../config.php');
-require_once('../lib.php');
-require_once('../html2text.inc.php');
-
-ob_start();
-//require_once('_page_header.php');
+require_once('_page_header.php');
 echo '<div style="font-size:11pt;">';
 
 // Obtain our parameters
@@ -205,11 +200,6 @@ if ($questionid === null || $questionid < 1) {
 }
 
 echo '</div>';
-//require_once('_page_footer.php');
-$text=ob_get_contents();
-ob_end_clean();
-$p= new Html2Text(nl2br($text));
-$text=$p->getText();
-echo strip_tags($text);
+require_once('_page_footer.php');
 ?>
 
